@@ -7,19 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Logo" />
+  <div class="header">
+    <img src="logo.png" alt="Logo" class="logo" />
     <h1>Laws Repository</h1>
-  </header>
-  <main>
-    <section class="law-list">
+  </div>
+  <div class="container">
+    <div class="sidebar">
       <h2>Available Laws</h2>
-      <ul id="law-list"></ul>
-    </section>
-    <section class="law-details" id="law-details">
+      <input type="text" id="searchBar" placeholder="Search laws..." />
+      <ul id="lawList"></ul>
+    </div>
+    <div class="main-content" id="lawDetails">
       <p>Select a law to view details</p>
-    </section>
-  </main>
+    </div>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>
