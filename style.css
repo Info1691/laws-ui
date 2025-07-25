@@ -1,58 +1,46 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background-color: #f4f4f4;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.header {
-  background-color: #005eb8;
+header {
+  background-color: #0077cc;
   color: white;
-  padding: 15px 0;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.logo {
-  height: 60px;
-  background-color: white;
+header .logo {
+  height: 50px;
+  margin-right: 20px;
+  background: white;
   padding: 5px;
-  margin-bottom: 10px;
+  border-radius: 4px;
 }
 
 .container {
-  width: 90%;
-  max-width: 800px;
-  background: white;
-  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border-radius: 8px;
+  flex-grow: 1;
+  overflow: auto;
 }
 
-input[type="file"] {
-  margin: 10px 0;
-}
-
-button {
-  padding: 10px 15px;
-  background-color: #005eb8;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-button:hover {
-  background-color: #004999;
-}
-
-h2 {
-  margin-top: 30px;
+#lawListContainer {
+  width: 25%;
+  margin-right: 30px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
 }
 
 .law-list {
@@ -63,8 +51,25 @@ h2 {
 .law-list li {
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.law-list li:hover {
+  background-color: #eef;
+}
+
+.law-display {
+  width: 70%;
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.law-text {
   white-space: pre-wrap;
-  background: #f9f9f9;
-  margin-bottom: 5px;
-  border-radius: 4px;
+  line-height: 1.5;
+  font-size: 14px;
 }
