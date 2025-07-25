@@ -1,11 +1,11 @@
 [
   {
-    "id": "jtl-1984.txt",
+    "id": "jtl-1984",
     "name": "Trusts (Jersey) Law",
     "year": 1984,
     "jurisdiction": "Jersey",
     "reference": "Jersey Trusts Law 1984",
-    "source": "https://www.jerseylaw.je",
+    "source": "https://www.jerseylaw.je/",
     "full_text_file": "laws/jtl-1984.txt",
     "breaches": ["Undisclosed delegation", "Improper investment"]
   }
