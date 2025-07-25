@@ -6,7 +6,7 @@ body {
 }
 
 header {
-  background-color: #0b2c5f; /* Navy blue */
+  background-color: #0b2c5f; /* final navy */
   color: white;
   padding: 1rem;
   display: flex;
@@ -14,12 +14,15 @@ header {
   justify-content: center;
 }
 
-header img.logo {
-  height: 50px;
+.logo-container {
   background-color: white;
-  border-radius: 4px;
   padding: 4px;
+  border-radius: 4px;
   margin-right: 1rem;
+}
+
+header .logo {
+  height: 50px;
 }
 
 .container {
