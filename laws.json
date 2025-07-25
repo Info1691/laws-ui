@@ -1,11 +1,10 @@
-{
-  "title": "Trusts (Jersey) Law 1984",
-  "year": 1984,
-  "jurisdiction": "Jersey",
-  "reference": "JTL 1984 c.35",
-  "source": "https://www.jerseylaw.je/laws/enacted/Pages/L-01.900.aspx",
-  "summary": "This law governs trusts established in Jersey, outlining key duties and definitions.",
-  "key_provisions": "Duties of trustees, investment powers, rights of beneficiaries.",
-  "applies_to": "Trustees, Settlors, Beneficiaries",
-  "breaches": ["breach of fiduciary duty", "conflicted trustee"]
-}
+[
+  {
+    "id": "jtl-1984",
+    "name": "Trusts (Jersey) Law",
+    "year": 1984,
+    "jurisdiction": "Jersey",
+    "source": "https://www.jerseylaw.je",
+    "full_text": "PUT FULL TEXT HERE WITHOUT TRUNCATION"
+  }
+]
