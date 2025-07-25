@@ -8,19 +8,17 @@
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" class="logo">
+    <img src="logo.png" alt="Logo" />
     <h1>Laws Repository</h1>
   </header>
   <main>
-    <div class="container">
-      <div class="left-panel">
-        <h2>Available Laws</h2>
-        <ul class="law-list"></ul>
-      </div>
-      <div class="right-panel law-detail">
-        <p>Select a law to view details</p>
-      </div>
-    </div>
+    <section class="law-list">
+      <h2>Available Laws</h2>
+      <ul id="law-list"></ul>
+    </section>
+    <section class="law-details" id="law-details">
+      <p>Select a law to view details</p>
+    </section>
   </main>
   <script src="main.js"></script>
 </body>
