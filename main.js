@@ -1,6 +1,6 @@
 fetch('./laws.json')
   .then(response => {
-    if (!response.ok) throw new Error('Network response was not ok');
+    if (!response.ok) throw new Error('Failed to fetch');
     return response.json();
   })
   .then(data => {
@@ -10,12 +10,12 @@ fetch('./laws.json')
 
     data.forEach(law => {
       const li = document.createElement('li');
-      li.textContent = law.name;
+      li.textContent = law.name || 'Untitled Law';
       li.className = 'law-list-title';
 
       li.addEventListener('click', () => {
-        lawTitle.textContent = law.name;
-        lawText.textContent = law.full_text;
+        lawTitle.textContent = `${law.name} (${law.year})`;
+        lawText.textContent = law.full_text || '[No text available]';
       });
 
       lawList.appendChild(li);
@@ -23,4 +23,5 @@ fetch('./laws.json')
   })
   .catch(error => {
     console.error("Error loading laws:", error);
+    document.getElementById('lawList').innerHTML = '<li style="color:red;">Failed to load laws.json</li>';
   });
