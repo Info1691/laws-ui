@@ -7,31 +7,33 @@ fetch('laws.json')
 
     data.forEach(law => {
       const li = document.createElement('li');
-      li.textContent = law.name || 'Unnamed Law';
+      li.textContent = law.name;
       li.className = 'law-list-title';
-
       li.addEventListener('click', () => {
-        lawTitle.textContent = `${law.name} (${law.year})`;
-        if (law.full_text_file) {
-          fetch(law.full_text_file)
-            .then(response => response.text())
-            .then(text => {
-              lawText.textContent = text;
-            })
-            .catch(err => {
-              lawText.textContent = '[Failed to load full text]';
-              console.error(err);
-            });
-        } else {
-          lawText.textContent = '[No full text provided]';
-        }
-      });
+        lawTitle.innerHTML = `<h2>${law.name} (${law.year})</h2>`;
 
+        // Fetch the full law text from the referenced file
+        fetch(law.full_text_file)
+          .then(res => res.text())
+          .then(text => {
+            lawText.innerHTML = `
+              <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
+              <p><strong>Reference:</strong> ${law.reference}</p>
+              <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
+              <h3>Full Text:</h3>
+              <pre style="white-space: pre-wrap;">${text}</pre>
+              <h3>Breaches:</h3>
+              <ul>${law.breaches.map(b => `<li>${b}</li>`).join('')}</ul>
+            `;
+          })
+          .catch(err => {
+            lawText.innerHTML = '[Error loading text file]';
+            console.error('Error loading text:', err);
+          });
+      });
       lawList.appendChild(li);
     });
   })
   .catch(error => {
-    console.error("Error loading laws:", error);
-    document.getElementById('lawList').innerHTML =
-      '<li style="color:red;">Failed to load laws.json</li>';
+    console.error('Error loading laws:', error);
   });
