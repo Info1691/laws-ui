@@ -1,5 +1,8 @@
-fetch('./laws.json')  // Fixed relative path
-  .then(response => response.json())
+fetch('./laws.json')
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
   .then(data => {
     const lawList = document.getElementById('lawList');
     const lawTitle = document.getElementById('lawTitle');
@@ -8,22 +11,16 @@ fetch('./laws.json')  // Fixed relative path
     data.forEach(law => {
       const li = document.createElement('li');
       li.textContent = law.name;
-      li.className = 'law-list-item';
+      li.className = 'law-list-title';
+
       li.addEventListener('click', () => {
-        lawTitle.innerHTML = `
-          <h2>${law.name}</h2>
-          <p><strong>Year:</strong> ${law.year}</p>
-          <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-          <p><strong>Reference:</strong> ${law.reference ?? 'N/A'}</p>
-          <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
-          <h3>Breaches:</h3>
-          <ul>${(law.breaches ?? []).map(b => `<li>${b}</li>`).join('')}</ul>
-        `;
+        lawTitle.textContent = law.name;
         lawText.textContent = law.full_text;
       });
+
       lawList.appendChild(li);
     });
   })
   .catch(error => {
-    console.error('Error loading laws:', error);
+    console.error("Error loading laws:", error);
   });
