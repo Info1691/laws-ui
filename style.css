@@ -1,0 +1,84 @@
+/* Reset and base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f4f7fc;
+  color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background-color: #1a4fa1;
+  color: white;
+  width: 100%;
+  padding: 12px 0;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header img {
+  height: 60px;
+  background-color: white;
+  padding: 6px;
+  border-radius: 6px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+header h1 {
+  display: inline-block;
+  font-size: 1.8em;
+  vertical-align: middle;
+  margin: 0;
+}
+
+/* Container */
+#lawsContainer {
+  width: 90%;
+  max-width: 1000px;
+  margin-top: 30px;
+}
+
+/* Law Card */
+.law-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.2s;
+}
+
+.law-card:hover {
+  transform: scale(1.01);
+}
+
+.law-header {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #1a4fa1;
+  margin-bottom: 10px;
+}
+
+.law-meta p,
+.law-body p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+strong {
+  color: #333;
+}
+
+/* Footer (optional) */
+footer {
+  margin-top: auto;
+  padding: 20px;
+  font-size: 0.9em;
+  color: #999;
+}
