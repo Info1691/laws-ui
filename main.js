@@ -1,37 +1,60 @@
-fetch('laws.json')
-  .then(response => response.json())
-  .then(laws => {
-    const container = document.getElementById('lawContainer');
-    const searchBox = document.getElementById('searchBoxLaw');
+let laws = [];
 
-    function displayLaws(filtered) {
-      container.innerHTML = '';
-      filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'law-card';
-        card.innerHTML = `
-          <h3>${item.article}: ${item.title}</h3>
-          <p>${item.text}</p>
-          ${item.breach_tags?.length ? `<p><strong>Breaches:</strong> ${item.breach_tags.join(', ')}</p>` : ''}
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    searchBox.addEventListener('input', () => {
-      const term = searchBox.value.toLowerCase();
-      const filtered = laws.filter(
-        law =>
-          law.article.toLowerCase().includes(term) ||
-          law.title.toLowerCase().includes(term) ||
-          law.text.toLowerCase().includes(term)
-      );
-      displayLaws(filtered);
+function loadLaws() {
+  fetch('laws.json')
+    .then(response => response.json())
+    .then(data => {
+      laws = data;
+      renderLawList();
+    })
+    .catch(error => {
+      console.error("Failed to load laws:", error);
     });
+}
 
-    displayLaws(laws);
-  })
-  .catch(err => {
-    console.error('Error loading laws.json:', err);
-    document.getElementById('lawContainer').innerHTML = '<p>Error loading law data.</p>';
+function renderLawList() {
+  const list = document.getElementById("lawList");
+  list.innerHTML = '';
+
+  if (!laws.length) {
+    const empty = document.createElement("li");
+    empty.textContent = "No laws currently stored.";
+    list.appendChild(empty);
+    return;
+  }
+
+  laws.forEach((law, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${law.name || 'Unnamed Law'} (${law.year || 'N/A'})</strong><br>${law.full_text || 'No content available.'}`;
+    list.appendChild(li);
   });
+}
+
+function uploadLaw() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select a file first.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const newLaw = JSON.parse(e.target.result);
+      if (!newLaw.full_text) {
+        alert("Invalid law file: missing full_text.");
+        return;
+      }
+      laws.push(newLaw);
+      renderLawList();
+      alert("Law uploaded locally. Remember to save manually to GitHub.");
+    } catch (err) {
+      alert("Failed to parse JSON.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+document.addEventListener("DOMContentLoaded", loadLaws);
