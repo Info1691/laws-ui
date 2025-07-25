@@ -5,6 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const lawList = document.getElementById("law-list");
       const lawDetails = document.getElementById("law-details");
 
+      if (!Array.isArray(data) || data.length === 0) {
+        lawList.innerHTML = "<li>No laws found</li>";
+        return;
+      }
+
       data.forEach(law => {
         const li = document.createElement("li");
         li.textContent = `${law.name} (${law.year})`;
@@ -19,9 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
                 <pre>${text}</pre>
               `;
+            })
+            .catch(err => {
+              lawDetails.innerHTML = `<p>Error loading full text: ${err}</p>`;
             });
         });
         lawList.appendChild(li);
       });
+    })
+    .catch(error => {
+      console.error("Error loading laws.json:", error);
     });
 });
