@@ -4,12 +4,10 @@ function loadLaws() {
   fetch('laws.json')
     .then(response => response.json())
     .then(data => {
-      laws = data;
+      laws = Array.isArray(data) ? data : [data];
       renderLawList();
     })
-    .catch(error => {
-      console.error("Failed to load laws:", error);
-    });
+    .catch(error => console.error("Failed to load laws:", error));
 }
 
 function renderLawList() {
@@ -17,44 +15,24 @@ function renderLawList() {
   list.innerHTML = '';
 
   if (!laws.length) {
-    const empty = document.createElement("li");
-    empty.textContent = "No laws currently stored.";
-    list.appendChild(empty);
+    list.innerHTML = "<li>No laws available.</li>";
     return;
   }
 
-  laws.forEach((law, index) => {
+  laws.forEach((law) => {
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${law.name || 'Unnamed Law'} (${law.year || 'N/A'})</strong><br>${law.full_text || 'No content available.'}`;
+    li.innerHTML = `
+      <strong>${law.title || 'Untitled Law'} (${law.year || 'N/A'})</strong><br/>
+      <em>Jurisdiction:</em> ${law.jurisdiction || 'Unknown'}<br/>
+      <em>Reference:</em> ${law.reference || 'N/A'}<br/>
+      <em>Source:</em> <a href="${law.source}" target="_blank">${law.source}</a><br/>
+      <em>Applies To:</em> ${law.applies_to || ''}<br/>
+      <em>Key Provisions:</em> ${law.key_provisions || ''}<br/>
+      <em>Breaches:</em> ${law.breaches?.join(', ') || ''}<br/>
+      <em>Summary:</em> ${law.summary || ''}<br/>
+    `;
     list.appendChild(li);
   });
-}
-
-function uploadLaw() {
-  const fileInput = document.getElementById('fileInput');
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert("Please select a file first.");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const newLaw = JSON.parse(e.target.result);
-      if (!newLaw.full_text) {
-        alert("Invalid law file: missing full_text.");
-        return;
-      }
-      laws.push(newLaw);
-      renderLawList();
-      alert("Law uploaded locally. Remember to save manually to GitHub.");
-    } catch (err) {
-      alert("Failed to parse JSON.");
-    }
-  };
-  reader.readAsText(file);
 }
 
 document.addEventListener("DOMContentLoaded", loadLaws);
