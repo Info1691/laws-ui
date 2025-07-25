@@ -1,58 +1,52 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f5f7fa;
+  background-color: #f7f7f7;
 }
 
 header {
-  background-color: #0b2c5f; /* final navy */
+  background-color: #0B2C63;
+  padding: 10px;
   color: white;
-  padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
-.logo-container {
-  background-color: white;
-  padding: 4px;
-  border-radius: 4px;
-  margin-right: 1rem;
-}
-
-header .logo {
-  height: 50px;
+.logo {
+  height: 40px;
+  margin-right: 10px;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
-  padding: 2rem;
-  gap: 2rem;
-  height: calc(100vh - 100px);
-  box-sizing: border-box;
+  padding: 20px;
 }
 
-.card {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  overflow-y: auto;
+.left-panel, .right-panel {
   flex: 1;
+  padding: 10px;
+  background: white;
+  margin: 10px;
+  border-radius: 8px;
+  min-height: 80vh;
 }
 
-.law-list-title {
+.law-list li {
   cursor: pointer;
-  padding: 0.5rem;
-  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  list-style-type: disc;
 }
 
-.law-list-title:hover {
+.law-list li:hover {
   background-color: #eef;
 }
 
-.law-text {
+pre.law-text {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 6px;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-height: 70vh;
+  overflow-y: auto;
 }
