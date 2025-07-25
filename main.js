@@ -1,39 +1,43 @@
-fetch('laws.json')
-  .then(response => response.json())
-  .then(data => {
-    const lawList = document.getElementById('lawList');
-    const lawTitle = document.getElementById('lawTitle');
-    const lawText = document.getElementById('lawText');
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("laws.json")
+    .then((response) => response.json())
+    .then((laws) => {
+      const listContainer = document.querySelector(".law-list");
+      const detailContainer = document.querySelector(".law-detail");
 
-    data.forEach(law => {
-      const li = document.createElement('li');
-      li.textContent = law.name;
-      li.className = 'law-list-title';
-      li.addEventListener('click', () => {
-        lawTitle.innerHTML = `<h2>${law.name} (${law.year})</h2>`;
+      laws.forEach((law) => {
+        const lawItem = document.createElement("li");
+        lawItem.textContent = `${law.name}`;
+        lawItem.classList.add("law-entry");
 
-        // Fetch the full law text from the referenced file
-        fetch(law.full_text_file)
-          .then(res => res.text())
-          .then(text => {
-            lawText.innerHTML = `
-              <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-              <p><strong>Reference:</strong> ${law.reference}</p>
-              <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
-              <h3>Full Text:</h3>
-              <pre style="white-space: pre-wrap;">${text}</pre>
-              <h3>Breaches:</h3>
-              <ul>${law.breaches.map(b => `<li>${b}</li>`).join('')}</ul>
-            `;
-          })
-          .catch(err => {
-            lawText.innerHTML = '[Error loading text file]';
-            console.error('Error loading text:', err);
-          });
+        lawItem.addEventListener("click", () => {
+          detailContainer.innerHTML = `
+            <h3>${law.name} (${law.year})</h3>
+            <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
+            <p><strong>Reference:</strong> ${law.reference}</p>
+            <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
+            <p><strong>Breaches:</strong> ${law.breaches.join(", ")}</p>
+            <pre class="law-text">Loading full text...</pre>
+          `;
+
+          const textEl = detailContainer.querySelector(".law-text");
+
+          // Fetch the full law text
+          fetch(law.full_text_file)
+            .then((res) => res.text())
+            .then((text) => {
+              textEl.textContent = text;
+            })
+            .catch((error) => {
+              textEl.textContent = "[Failed to load text]";
+              console.error("Error loading law text:", error);
+            });
+        });
+
+        listContainer.appendChild(lawItem);
       });
-      lawList.appendChild(li);
+    })
+    .catch((err) => {
+      console.error("Failed to load laws.json:", err);
     });
-  })
-  .catch(error => {
-    console.error('Error loading laws:', error);
-  });
+});
