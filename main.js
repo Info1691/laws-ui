@@ -1,34 +1,37 @@
-document.addEventListener("DOMContentLoaded", () => {
-  fetch('laws.json')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('lawsContainer');
+fetch('laws.json')
+  .then(response => response.json())
+  .then(laws => {
+    const container = document.getElementById('lawContainer');
+    const searchBox = document.getElementById('searchBoxLaw');
 
-      if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = "<p>No laws found in the repository.</p>";
-        return;
-      }
-
-      data.forEach((law, index) => {
+    function displayLaws(filtered) {
+      container.innerHTML = '';
+      filtered.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'card';
-
+        card.className = 'law-card';
         card.innerHTML = `
-          <h2>${law.title}</h2>
-          <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-          <p><strong>Year:</strong> ${law.year}</p>
-          <p><strong>Citation:</strong> ${law.citation}</p>
-          <p><strong>Source:</strong> ${law.source}</p>
-          <p><strong>Legal Principle:</strong><br/> ${law.legal_principle}</p>
-          <p><strong>Full Text:</strong><br/><pre>${law.full_text}</pre></p>
-          <p><strong>Breach Tags:</strong> ${law.breach_tags.join(', ')}</p>
+          <h3>${item.article}: ${item.title}</h3>
+          <p>${item.text}</p>
+          ${item.breach_tags?.length ? `<p><strong>Breaches:</strong> ${item.breach_tags.join(', ')}</p>` : ''}
         `;
-
         container.appendChild(card);
       });
-    })
-    .catch(err => {
-      console.error("Error loading laws.json:", err);
-      document.getElementById('lawsContainer').innerHTML = "<p>Failed to load laws.</p>";
+    }
+
+    searchBox.addEventListener('input', () => {
+      const term = searchBox.value.toLowerCase();
+      const filtered = laws.filter(
+        law =>
+          law.article.toLowerCase().includes(term) ||
+          law.title.toLowerCase().includes(term) ||
+          law.text.toLowerCase().includes(term)
+      );
+      displayLaws(filtered);
     });
-});
+
+    displayLaws(laws);
+  })
+  .catch(err => {
+    console.error('Error loading laws.json:', err);
+    document.getElementById('lawContainer').innerHTML = '<p>Error loading law data.</p>';
+  });
