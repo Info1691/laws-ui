@@ -2,30 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laws Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laws Repository</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="logo-container">
-      <img src="logo.png" alt="Logo" class="logo" />
-    </div>
+    <img src="logo.png" alt="Logo" class="logo">
     <h1>Laws Repository</h1>
   </header>
-
-  <main class="container">
-    <div id="lawListContainer" class="card">
-      <h2>Available Laws</h2>
-      <ul id="lawList" class="law-list"></ul>
-    </div>
-
-    <div id="lawDisplay" class="card">
-      <h2 id="lawTitle"></h2>
-      <pre id="lawText" class="law-text"></pre>
+  <main>
+    <div class="container">
+      <div class="left-panel">
+        <h2>Available Laws</h2>
+        <ul class="law-list"></ul>
+      </div>
+      <div class="right-panel law-detail">
+        <p>Select a law to view details</p>
+      </div>
     </div>
   </main>
-
   <script src="main.js"></script>
 </body>
 </html>
