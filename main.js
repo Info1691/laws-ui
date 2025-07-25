@@ -22,15 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const textEl = detailContainer.querySelector(".law-text");
 
-          // Fetch the full law text
           fetch(law.full_text_file)
-            .then((res) => res.text())
+            .then((res) => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              return res.text();
+            })
             .then((text) => {
               textEl.textContent = text;
             })
-            .catch((error) => {
-              textEl.textContent = "[Failed to load text]";
-              console.error("Error loading law text:", error);
+            .catch((err) => {
+              console.error("Failed to load full text:", err);
+              textEl.textContent = "[Error loading full law text]";
             });
         });
 
