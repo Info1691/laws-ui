@@ -1,84 +1,48 @@
-/* Reset and base */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f4f7fc;
-  color: #1c1c1c;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+  background-color: #f8f9fb;
 }
 
-/* Header */
 header {
-  background-color: #1a4fa1;
+  background-color: #0074cc;
   color: white;
-  width: 100%;
-  padding: 12px 0;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-header img {
+.logo {
   height: 60px;
   background-color: white;
-  padding: 6px;
-  border-radius: 6px;
-  margin-right: 10px;
-  vertical-align: middle;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-header h1 {
-  display: inline-block;
-  font-size: 1.8em;
-  vertical-align: middle;
-  margin: 0;
-}
-
-/* Container */
-#lawsContainer {
-  width: 90%;
-  max-width: 1000px;
-  margin-top: 30px;
-}
-
-/* Law Card */
-.law-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+.container {
+  max-width: 960px;
+  margin: auto;
   padding: 20px;
+}
+
+input#searchBoxLaw {
+  width: 100%;
+  padding: 10px;
   margin-bottom: 20px;
-  transition: transform 0.2s;
+  font-size: 16px;
 }
 
-.law-card:hover {
-  transform: scale(1.01);
+.law-card {
+  background-color: white;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
 }
 
-.law-header {
-  font-size: 1.3em;
-  font-weight: bold;
-  color: #1a4fa1;
-  margin-bottom: 10px;
-}
-
-.law-meta p,
-.law-body p {
-  margin: 6px 0;
-  line-height: 1.5;
-}
-
-strong {
-  color: #333;
-}
-
-/* Footer (optional) */
-footer {
-  margin-top: auto;
-  padding: 20px;
-  font-size: 0.9em;
-  color: #999;
+.law-card h3 {
+  margin-top: 0;
+  color: #0074cc;
 }
