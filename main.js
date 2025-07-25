@@ -1,4 +1,4 @@
-fetch('laws.json')
+fetch('./laws.json')  // Fixed relative path
   .then(response => response.json())
   .then(data => {
     const lawList = document.getElementById('lawList');
@@ -14,12 +14,11 @@ fetch('laws.json')
           <h2>${law.name}</h2>
           <p><strong>Year:</strong> ${law.year}</p>
           <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-          <p><strong>Reference:</strong> ${law.reference}</p>
+          <p><strong>Reference:</strong> ${law.reference ?? 'N/A'}</p>
           <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
           <h3>Breaches:</h3>
-          <ul>${law.breaches.map(b => `<li>${b}</li>`).join('')}</ul>
+          <ul>${(law.breaches ?? []).map(b => `<li>${b}</li>`).join('')}</ul>
         `;
-
         lawText.textContent = law.full_text;
       });
       lawList.appendChild(li);
