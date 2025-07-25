@@ -1,52 +1,56 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background-color: #f7f7f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #ffffff; /* Canonical white */
+  color: #000000;
 }
 
 header {
-  background-color: #0B2C63;
-  padding: 10px;
+  background-color: #0a2d6b;
   color: white;
+  padding: 1rem;
+  text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.logo {
+header img {
   height: 40px;
   margin-right: 10px;
 }
 
-.container {
+main {
   display: flex;
-  padding: 20px;
+  padding: 1rem;
 }
 
-.left-panel, .right-panel {
+.law-list {
   flex: 1;
-  padding: 10px;
-  background: white;
-  margin: 10px;
-  border-radius: 8px;
-  min-height: 80vh;
+  max-width: 250px;
+  border-right: 2px solid #ccc;
+  padding-right: 1rem;
+}
+
+.law-list ul {
+  list-style: none;
+  padding: 0;
 }
 
 .law-list li {
+  margin-bottom: 0.5rem;
   cursor: pointer;
-  padding: 5px;
-  list-style-type: disc;
+  padding: 0.5rem;
+  background-color: #f2f2ff;
+  border-radius: 4px;
 }
 
 .law-list li:hover {
-  background-color: #eef;
+  background-color: #dbe4ff;
 }
 
-pre.law-text {
-  background: #f4f4f4;
-  padding: 10px;
-  border-radius: 6px;
+.law-details {
+  flex: 3;
+  padding-left: 2rem;
   white-space: pre-wrap;
-  overflow-wrap: break-word;
-  max-height: 70vh;
-  overflow-y: auto;
 }
