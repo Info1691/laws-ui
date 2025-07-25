@@ -5,17 +5,20 @@ body {
   background-color: #f5f7fa;
 }
 
-header img {
-  height: 50px;
-  margin-right: 1rem;
-  background-color: white;
-  padding: 5px;
-  border-radius: 5px;
-}
+header {
+  background-color: #0b2c5f; /* Navy blue */
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-header img {
+header img.logo {
   height: 50px;
+  background-color: white;
+  border-radius: 4px;
+  padding: 4px;
   margin-right: 1rem;
 }
 
@@ -37,16 +40,16 @@ header img {
   flex: 1;
 }
 
-.law-list-item {
-  padding: 0.5rem;
+.law-list-title {
   cursor: pointer;
-  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
 }
 
-.law-list-item:hover {
-  background-color: #eef2f7;
+.law-list-title:hover {
+  background-color: #eef;
 }
 
-.law-details h2 {
-  margin-top: 0;
+.law-text {
+  white-space: pre-wrap;
 }
