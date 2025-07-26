@@ -5,8 +5,6 @@ fetch('laws.json')
     const lawDetails = document.getElementById('lawDetails');
     const searchBar = document.getElementById('searchBar');
 
-    let currentLaws = data;
-
     function renderLawList(laws) {
       lawList.innerHTML = '';
       laws.forEach(law => {
@@ -31,17 +29,16 @@ fetch('laws.json')
       `;
     }
 
+    renderLawList(data);
+
     searchBar.addEventListener('input', () => {
       const query = searchBar.value.toLowerCase();
-      const filtered = currentLaws.filter(law =>
-        law.title.toLowerCase().includes(query) ||
-        law.jurisdiction.toLowerCase().includes(query)
+      const filtered = data.filter(law =>
+        law.title.toLowerCase().includes(query) || law.jurisdiction.toLowerCase().includes(query)
       );
       renderLawList(filtered);
     });
-
-    renderLawList(currentLaws);
   })
   .catch(error => {
-    document.getElementById('lawDetails').innerHTML = `<p>Error loading laws: ${error.message}</p>`;
+    document.getElementById('lawDetails').innerHTML = `<p>Error loading law data: ${error.message}</p>`;
   });
