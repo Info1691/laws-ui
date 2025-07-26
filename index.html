@@ -7,20 +7,29 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="header">
-    <img src="logo.png" alt="Logo" class="logo" />
+  <header>
+    <img src="logo.png" alt="Logo" id="logo" />
     <h1>Laws Repository</h1>
-  </div>
-  <div class="container">
-    <div class="sidebar">
-      <h2>Available Laws</h2>
-      <input type="text" id="searchBar" placeholder="Search laws..." />
-      <ul id="lawList"></ul>
+  </header>
+  <main class="container">
+    <div class="search-bar">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search laws by title, jurisdiction, year..."
+        oninput="searchLaws()"
+      />
     </div>
-    <div class="main-content" id="lawDetails">
-      <p>Select a law to view details</p>
+    <div class="law-container">
+      <div class="law-list">
+        <h2>Available Laws</h2>
+        <ul id="lawList"></ul>
+      </div>
+      <div class="law-details" id="lawDetails">
+        <p>Select a law to view details</p>
+      </div>
     </div>
-  </div>
+  </main>
   <script src="main.js"></script>
 </body>
 </html>
