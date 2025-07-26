@@ -1,38 +1,49 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
   background: #f4f4f4;
   color: #000;
 }
 
 header {
-  background: #002b5c;
-  color: white;
-  padding: 10px;
+  background-color: #002b5c;
+  padding: 10px 0;
   text-align: center;
+  color: white;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 .logo {
   height: 60px;
   background: white;
-  padding: 5px;
-  margin-bottom: 5px;
+  padding: 4px;
+  display: block;
+  margin: 0 auto 5px auto;
+  border: none;
+  box-shadow: none;
 }
 
-main .container {
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+main.container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 100px);
 }
 
 aside {
   width: 25%;
+  background: #fff;
   padding: 20px;
-  background-color: #fff;
   border-right: 1px solid #ddd;
+  overflow-y: auto;
 }
 
 aside h2 {
-  font-size: 18px;
+  font-size: 1.1rem;
   margin-bottom: 10px;
 }
 
@@ -40,8 +51,8 @@ aside h2 {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
   border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 #lawList {
@@ -51,20 +62,20 @@ aside h2 {
 
 #lawList li {
   padding: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   background-color: #e6e6ff;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 #lawList li:hover {
   background-color: #ccccff;
 }
 
-section#lawDetails {
+#lawDetails {
   width: 75%;
   padding: 20px;
-  background-color: #fff;
+  background: #fff;
   overflow-y: auto;
   white-space: pre-wrap;
 }
