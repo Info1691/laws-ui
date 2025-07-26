@@ -9,7 +9,7 @@ fetch('laws.json')
 
     function renderLawList(laws) {
       lawList.innerHTML = '';
-      laws.forEach((law, index) => {
+      laws.forEach(law => {
         const li = document.createElement('li');
         li.textContent = law.title;
         li.addEventListener('click', () => {
