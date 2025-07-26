@@ -8,28 +8,23 @@
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" id="logo" />
+    <img src="logo.png" alt="Logo" class="logo" />
     <h1>Laws Repository</h1>
   </header>
-  <main class="container">
-    <div class="search-bar">
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search laws by title, jurisdiction, year..."
-        oninput="searchLaws()"
-      />
-    </div>
-    <div class="law-container">
-      <div class="law-list">
+
+  <main>
+    <div class="container">
+      <aside>
+        <input type="text" id="searchBar" placeholder="Search laws by title, jurisdiction" />
         <h2>Available Laws</h2>
         <ul id="lawList"></ul>
-      </div>
-      <div class="law-details" id="lawDetails">
+      </aside>
+      <section id="lawDetails">
         <p>Select a law to view details</p>
-      </div>
+      </section>
     </div>
   </main>
+
   <script src="main.js"></script>
 </body>
 </html>
