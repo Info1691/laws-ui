@@ -1,39 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('laws.json')
-    .then(response => response.json())
-    .then(data => {
-      window.lawsData = data;
-      renderLawList(data);
+fetch('laws.json')
+  .then(response => response.json())
+  .then(data => {
+    const lawList = document.getElementById('lawList');
+    const lawDetails = document.getElementById('lawDetails');
+    const searchBar = document.getElementById('searchBar');
+
+    let currentLaws = data;
+
+    function renderLawList(laws) {
+      lawList.innerHTML = '';
+      laws.forEach((law, index) => {
+        const li = document.createElement('li');
+        li.textContent = law.title;
+        li.addEventListener('click', () => {
+          document.querySelectorAll('#lawList li').forEach(el => el.classList.remove('active'));
+          li.classList.add('active');
+          renderLawDetails(law);
+        });
+        lawList.appendChild(li);
+      });
+    }
+
+    function renderLawDetails(law) {
+      lawDetails.innerHTML = `
+        <h2>${law.title}</h2>
+        <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
+        <p><strong>Reference:</strong> ${law.reference}</p>
+        <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
+        <pre>${law.full_text}</pre>
+      `;
+    }
+
+    searchBar.addEventListener('input', () => {
+      const query = searchBar.value.toLowerCase();
+      const filtered = currentLaws.filter(law =>
+        law.title.toLowerCase().includes(query) ||
+        law.jurisdiction.toLowerCase().includes(query)
+      );
+      renderLawList(filtered);
     });
 
-  document.getElementById('searchInput').addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    const filtered = window.lawsData.filter(law =>
-      law.title.toLowerCase().includes(searchTerm) ||
-      law.jurisdiction.toLowerCase().includes(searchTerm)
-    );
-    renderLawList(filtered);
+    renderLawList(currentLaws);
+  })
+  .catch(error => {
+    document.getElementById('lawDetails').innerHTML = `<p>Error loading laws: ${error.message}</p>`;
   });
-});
-
-function renderLawList(data) {
-  const list = document.getElementById('lawList');
-  list.innerHTML = '';
-  data.forEach((law, index) => {
-    const item = document.createElement('li');
-    item.textContent = law.title;
-    item.addEventListener('click', () => showLawDetails(law));
-    list.appendChild(item);
-  });
-}
-
-function showLawDetails(law) {
-  const section = document.getElementById('lawDetails');
-  section.innerHTML = `
-    <h2>${law.title}</h2>
-    <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-    <p><strong>Reference:</strong> ${law.reference}</p>
-    <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
-    <pre>${law.full_text}</pre>
-  `;
-}
