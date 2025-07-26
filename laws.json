@@ -3,7 +3,14 @@
     "title": "Trusts (Jersey) Law (1984)",
     "jurisdiction": "Jersey",
     "reference": "Jersey Trusts Law 1984",
-    "source": "laws/.txt",
-    "text_file": "laws/jtl-1984.txt"
+    "source": "https://www.jerseylaw.je/",
+    "text_file": "data/laws/jersey/JTL-1984.txt"
+  },
+  {
+    "title": "Financial Services (Jersey) Law (1998)",
+    "jurisdiction": "Jersey",
+    "reference": "Jersey Financial Services Law 1998",
+    "source": "https://www.jerseylaw.je/",
+    "text_file": "data/laws/jersey/Financial Services (Jersey) Law 1998.txt"
   }
 ]
