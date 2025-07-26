@@ -1,38 +1,43 @@
-async function loadLaws() {
-  const response = await fetch("laws.json");
-  const laws = await response.json();
-  const lawList = document.getElementById("lawList");
+document.addEventListener('DOMContentLoaded', () => {
+  const lawListEl = document.getElementById('lawList');
+  const lawDetailsEl = document.getElementById('lawDetails');
+  const searchBar = document.getElementById('searchBar');
 
-  laws.forEach((law, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${law.name} (${law.year})`;
-    li.addEventListener("click", () => displayLawDetails(law));
-    lawList.appendChild(li);
+  let allLaws = [];
+
+  fetch('laws.json')
+    .then(res => res.json())
+    .then(data => {
+      allLaws = data;
+      renderLawList(allLaws);
+    });
+
+  function renderLawList(laws) {
+    lawListEl.innerHTML = '';
+    laws.forEach((law, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${law.title} (${law.year})`;
+      li.addEventListener('click', () => showLawDetails(law));
+      lawListEl.appendChild(li);
+    });
+  }
+
+  function showLawDetails(law) {
+    lawDetailsEl.innerHTML = `
+      <h2>${law.title} (${law.year})</h2>
+      <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
+      <p><strong>Reference:</strong> ${law.reference}</p>
+      <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
+      <pre>${law.full_text}</pre>
+    `;
+  }
+
+  searchBar.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const filtered = allLaws.filter(law =>
+      law.title.toLowerCase().includes(query) ||
+      law.jurisdiction.toLowerCase().includes(query)
+    );
+    renderLawList(filtered);
   });
-}
-
-async function displayLawDetails(law) {
-  const response = await fetch(law.full_text_file);
-  const fullText = await response.text();
-
-  const lawDetails = document.getElementById("lawDetails");
-  lawDetails.innerHTML = `
-    <h2>${law.name} (${law.year})</h2>
-    <p><strong>Jurisdiction:</strong> ${law.jurisdiction}</p>
-    <p><strong>Reference:</strong> ${law.reference}</p>
-    <p><strong>Source:</strong> <a href="${law.source}" target="_blank">${law.source}</a></p>
-    <pre>${fullText}</pre>
-  `;
-}
-
-function searchLaws() {
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const listItems = document.querySelectorAll("#lawList li");
-
-  listItems.forEach(item => {
-    const text = item.textContent.toLowerCase();
-    item.style.display = text.includes(input) ? "block" : "none";
-  });
-}
-
-loadLaws();
+});
