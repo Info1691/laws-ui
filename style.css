@@ -1,77 +1,26 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-}
-
-header {
-  background-color: #0a3c74;
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-#logo {
-  height: 40px;
-  background-color: white;
-  padding: 4px;
-  margin-right: 15px;
-}
-
-h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
-.container {
-  display: flex;
-  height: calc(100vh - 60px);
-}
-
-.sidebar {
-  width: 250px;
-  background-color: #ffffff;
-  border-right: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-
-.sidebar input {
-  width: 100%;
-  padding: 6px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar li {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.sidebar li:hover,
-.sidebar li.active {
-  background-color: #cddfff;
-}
-
-.main-content {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #ffffff;
-  box-sizing: border-box;
-}
-
-#lawDetails pre {
-  background-color: #f4f4f4;
-  padding: 12px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  border: 1px solid #ddd;
-}
+/* Shared look (matches Rules UI) */
+*{box-sizing:border-box} html,body{margin:0;padding:0;height:100%}
+body{font-family:-apple-system,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#f7f7f7;color:#111}
+.app-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#0b3c6d;color:#fff}
+.logo{height:40px;background:#fff;padding:4px;border-radius:4px}
+.title{margin:0;font-size:1.25rem}
+#app{display:flex;height:calc(100vh - 64px);max-width:1400px;margin:0 auto}
+#sidebar{width:300px;min-width:260px;max-width:380px;display:flex;flex-direction:column;gap:10px;padding:12px;background:#eef2f7;border-right:1px solid #d7dbe3}
+.sidebar-title{margin:0 0 4px 0;font-size:1rem}
+#listSearch,.toolbar input{padding:8px 10px;font-size:14px;border:1px solid #cbd5e1;border-radius:6px;background:#fff}
+.rule-list{list-style:none;padding:0;margin:0;overflow:auto;flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:6px}
+.rule-list li{border-bottom:1px solid #eef2f7}
+.rule-list li:last-child{border-bottom:none}
+.rule-btn{display:block;width:100%;padding:10px 12px;text-align:left;background:#fff;border:0;cursor:pointer;font-size:14px}
+.rule-btn:hover{background:#f3f6fb}
+.rule-btn.active{background:#dfeaf9}
+#viewer{flex:1;display:flex;flex-direction:column;gap:10px;padding:12px}
+.toolbar{display:flex;gap:8px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:10px}
+.text{white-space:pre-wrap;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:12px;min-height:280px;overflow:auto;flex:1}
+.actions{display:flex;gap:10px}
+.btn{padding:8px 12px;border:1px solid #cbd5e1;background:#f8fafc;border-radius:6px;cursor:pointer}
+.btn:hover{filter:brightness(0.98)}
+.status{color:#4b5563;font-size:12px;min-height:16px}
+mark{background:#fff59d;color:#000}
+@media (max-width:880px){#app{flex-direction:column;height:auto}#sidebar{width:100%;border-right:0;border-bottom:1px solid #d7dbe3}}
