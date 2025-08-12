@@ -5,7 +5,7 @@
     "jurisdiction": "Jersey",
     "reference": "CJL-1991",
     "source": "https://www.jerseylaw.je/",
-    "text_file": "data/laws/jersey/companies-jersey-law-1991.txt"
+    "text_file": "data/laws/jersey/companies (jersey) Law 1991.txt"
   },
   {
     "id": "jtl-1984",
@@ -13,7 +13,7 @@
     "jurisdiction": "Jersey",
     "reference": "Jersey Trusts Law 1984",
     "source": "https://www.jerseylaw.je/",
-    "text_file": "data/laws/jersey/trusts-jersey-law-1984.txt"
+    "text_file": "data/laws/jersey/JTL-1984.txt"
   },
   {
     "id": "fsjl-1998",
@@ -21,6 +21,6 @@
     "jurisdiction": "Jersey",
     "reference": "Jersey Financial Services Law 1998",
     "source": "https://www.jerseylaw.je/",
-    "text_file": "data/laws/jersey/financial-services-jersey-law-1998.txt"
+    "text_file": "data/laws/jersey/Financial Services (Jersey) Law 1998.txt"
   }
 ]
