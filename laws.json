@@ -1,13 +1,10 @@
 [
   {
-    "id": "jersey-companies-law-1991",
     "title": "Companies (Jersey) Law 1991",
     "jurisdiction": "Jersey",
     "reference": "CJL-1991",
-    "parts": 
-      {"title": "Part 1: Preliminary", "reference_url": "data/laws/jersey/companies-law-1991/part-01-preliminary.txt"},
-      {"title": "Part 2: Formation & Constitution", "reference_url": "data/laws/jersey/companies-law-1991/part-02-formation.txt"}
-    
+    "source": "https://www.jerseylaw.je/"
+    "text_file": "data/laws/companies (jersey) law 1991.txt
   }
   {
     "title": "Trusts (Jersey) Law (1984)",
