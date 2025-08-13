@@ -13,28 +13,26 @@
   </header>
 
   <main id="app" role="main" aria-label="Laws viewer">
-    <aside id="sidebar" aria-label="Law selector">
+    <aside id="sidebar" class="sidebar" aria-label="Select Law / Part">
       <h2 class="sidebar-title">Select Law / Part</h2>
-      <input id="listSearch" type="search" placeholder="Filter list…"
-             aria-label="Filter list"/>
-      <ul id="itemlist" class="rule-list" aria-label="Available items"></ul>
+      <input id="listSearch" type="search" placeholder="Filter list…" aria-label="Filter list"/>
+      <ul id="itemList" class="rule-list" role="listbox" aria-label="Available items"></ul>
     </aside>
 
     <section id="viewer" aria-live="polite">
       <div class="toolbar">
-        <input id="textSearch" type="search" placeholder="Search within text…"
-               aria-label="Search within text"/>
+        <input id="textSearch" type="search" placeholder="Search within text…" aria-label="Search within text"/>
         <button id="prevBtn" type="button" class="btn">Prev</button>
         <button id="nextBtn" type="button" class="btn">Next</button>
       </div>
 
-      <section class="meta">
+      <div id="meta" class="meta">
         <div><strong>Jurisdiction:</strong> <span id="jurisdiction">—</span></div>
         <div><strong>Reference:</strong> <span id="reference">—</span></div>
         <div><strong>Source:</strong> <span id="source">—</span></div>
-      </section>
+      </div>
 
-      <pre id="docText" class="text">Loading…</pre>
+      <pre id="docText" class="text" aria-live="polite">Loading…</pre>
 
       <div class="actions">
         <button id="printBtn" class="btn" type="button">Print</button>
@@ -42,17 +40,9 @@
       </div>
 
       <p id="status" class="status" aria-live="polite"></p>
+      <p class="footnote">Reads from <code>data/laws/**/laws.json</code> (or <code>laws.json</code>) and text files under <code>data/laws/</code>. No file writes.</p>
     </section>
   </main>
-
-  <footer class="footer">
-    <small>
-      Reads from <code>laws.json</code> (falls back to <code>data/laws.json</code>,
-      <code>data/laws/laws.json</code>, <code>data/laws/jersey/laws.json</code>)
-      and plain text files pointed to by each entry’s <code>text_file</code>.
-      No file writes.
-    </small>
-  </footer>
 
   <script src="main.js?v=12"></script>
 </body>
