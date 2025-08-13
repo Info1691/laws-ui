@@ -4,10 +4,10 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Laws Repository</title>
-  <link rel="stylesheet" href="style.css?v=1"/>
+  <link rel="stylesheet" href="style.css?v=12"/>
 </head>
 <body>
-  <header class="app-header" role="banner">
+  <header class="app-header">
     <img src="logo.png" alt="Logo" class="logo"/>
     <h1 class="title">Laws Repository</h1>
   </header>
@@ -15,22 +15,24 @@
   <main id="app" role="main" aria-label="Laws viewer">
     <aside id="sidebar" aria-label="Law selector">
       <h2 class="sidebar-title">Select Law / Part</h2>
-      <input id="listSearch" type="search" placeholder="Filter list…" aria-label="Filter list"/>
-      <ul id="itemList" class="rule-list" role="listbox" aria-label="Available items"></ul>
+      <input id="listSearch" type="search" placeholder="Filter list…"
+             aria-label="Filter list"/>
+      <ul id="itemlist" class="rule-list" aria-label="Available items"></ul>
     </aside>
 
     <section id="viewer" aria-live="polite">
       <div class="toolbar">
-        <input id="textSearch" type="search" placeholder="Search within text…" aria-label="Search within text"/>
-        <button id="prevBtn" type="button">Prev</button>
-        <button id="nextBtn" type="button">Next</button>
+        <input id="textSearch" type="search" placeholder="Search within text…"
+               aria-label="Search within text"/>
+        <button id="prevBtn" type="button" class="btn">Prev</button>
+        <button id="nextBtn" type="button" class="btn">Next</button>
       </div>
 
-      <div id="meta" class="meta">
+      <section class="meta">
         <div><strong>Jurisdiction:</strong> <span id="jurisdiction">—</span></div>
         <div><strong>Reference:</strong> <span id="reference">—</span></div>
         <div><strong>Source:</strong> <span id="source">—</span></div>
-      </div>
+      </section>
 
       <pre id="docText" class="text">Loading…</pre>
 
@@ -44,9 +46,14 @@
   </main>
 
   <footer class="footer">
-    <small>Reads from <code>data/laws/laws.json</code> (fallbacks supported) and text files under <code>data/laws/</code>. No file writes.</small>
+    <small>
+      Reads from <code>laws.json</code> (falls back to <code>data/laws.json</code>,
+      <code>data/laws/laws.json</code>, <code>data/laws/jersey/laws.json</code>)
+      and plain text files pointed to by each entry’s <code>text_file</code>.
+      No file writes.
+    </small>
   </footer>
 
-  <script src="main.js?v=1"></script>
+  <script src="main.js?v=12"></script>
 </body>
 </html>
