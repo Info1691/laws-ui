@@ -4,10 +4,18 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Laws Repository</title>
+
+  <!-- Existing styles -->
   <link rel="stylesheet" href="style.css?v=15"/>
+
+  <!-- Drawer styles -->
+  <link rel="stylesheet" href="drawer.css"/>
 </head>
 <body>
   <header class="app-header" role="banner">
+    <!-- Single working trigger for the shared drawer -->
+    <button id="repoBtn" class="btn btn-light" type="button" aria-controls="repo-drawer" aria-expanded="false">Repos</button>
+
     <img src="logo.png" alt="Logo" class="logo"/>
     <h1 class="title">Laws Repository</h1>
   </header>
@@ -43,11 +51,34 @@
 
       <p id="status" class="status" aria-live="polite"></p>
       <p class="footnote">
-        Reads from <code>laws.json</code> (fallbacks: <code>data/laws.json</code>, <code>data/laws/laws.json</code>, <code>data/laws/jersey/laws.json</code>) and plain text files referenced by <code>text_file</code>.
+        Reads from <code>laws.json</code> (fallbacks: <code>data/laws.json</code>, <code>data/laws/laws.json</code>, <code>data/laws/jersey/laws.json</code>)
+        and plain text files referenced by <code>text_file</code>.
       </p>
     </section>
   </main>
 
-  <script src="main.js?v=15"></script>
+  <!-- Your existing app logic -->
+  <script src="main.js?v=15" defer></script>
+
+  <!-- Optional: explicitly define the drawer links (omit to use defaults in drawer.js) -->
+  <script>
+    window.REPO_LINKS = [
+      { href: 'https://info1691.github.io/rules-ui/',           label: 'Rules Repository' },
+      { href: 'https://info1691.github.io/laws-ui/',            label: 'Laws Repository' },
+      { href: 'https://info1691.github.io/commentary-ui/',      label: 'Commentary Viewer' },
+      { href: 'https://info1691.github.io/Law-Texts-ui/',       label: 'Trust Law Textbooks' },
+      { href: 'https://info1691.github.io/compliance-ui/',      label: 'Compliance – Citations' },
+      { href: 'https://info1691.github.io/compliance-ui/bulk/', label: 'Citations – Bulk Upload' },
+      { href: 'https://info1691.github.io/breaches-ui/',        label: 'Breaches Manager' }
+    ];
+  </script>
+
+  <!-- Shared drawer logic -->
+  <script src="drawer.js" defer></script>
+  <script defer>
+    window.addEventListener('DOMContentLoaded', () => {
+      RepoDrawer.init('#repoBtn');
+    });
+  </script>
 </body>
 </html>
