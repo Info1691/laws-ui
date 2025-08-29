@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search (beta) — Laws</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:24px;background:#f1f5f9}
+  .wrap{max-width:900px;margin:0 auto}
+  .panel{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px}
+  input[type="search"]{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:16px}
+  ul{list-style:none;margin:16px 0 0;padding:0}
+  li{background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:14px 16px;margin:12px 0}
+  .title{font-weight:700;margin:0 0 6px 0}
+  .meta{font-size:.9rem;opacity:.8;margin-bottom:8px}
+  .chip{display:inline-block;font-size:.75rem;border-radius:999px;padding:4px 9px;border:1px solid #d1d5db;background:#fff;margin-right:8px;text-decoration:none;color:#111}
+  a.back{display:inline-block;margin-bottom:12px;text-decoration:none}
+</style>
+<div class="wrap">
+  <a class="back" href="./">&larr; Back</a>
+  <div class="panel">
+    <input id="q" type="search" placeholder="Search laws…" autofocus />
+    <ul id="results"></ul>
+  </div>
+</div>
+<script>
+const DATA_URL = './laws.json';
+const $q = document.getElementById('q');
+const $list = document.getElementById('results');
+const norm = v => (v ?? '').toString().toLowerCase();
+const tokens = s => norm(s).split(/\s+/).filter(Boolean);
+let items = [];
+
+function row(it){
+  const li = document.createElement('li');
+  const t = document.createElement('div'); t.className='title'; t.textContent = it.title || 'Untitled';
+  const m = document.createElement('div'); m.className='meta'; m.textContent = [it.jurisdiction, it.year].filter(Boolean).join(' · ');
+  const a = document.createElement('a'); a.className='chip'; a.textContent = 'TXT';
+  // most laws live under ./data/laws/<jurisdiction>/<file>.txt in this repo
+  a.href = it.path || it.url || (it.txt ? it.txt : '#');
+  a.target = '_blank'; a.rel='noopener';
+  li.append(t,m,a);
+  return li;
+}
+
+function render(rows){ $list.innerHTML=''; rows.forEach(r => $list.appendChild(row(r))); }
+
+function search(){
+  const q = tokens($q.value);
+  if (!q.length) { render(items); return; }
+  const out = items.filter(it => {
+    const hay = [it.title, it.jurisdiction, it.year, it.reference].map(norm).join(' ');
+    return q.every(t => hay.includes(t));
+  });
+  render(out);
+}
+
+(async () => {
+  const res = await fetch(DATA_URL, {cache:'no-cache'}); items = await res.json();
+  render(items);
+})();
+$q.addEventListener('input', search);
+</script>
