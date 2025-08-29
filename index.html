@@ -8,25 +8,25 @@
   <style>
     :root{
       --bg:#f3f4f6; --ink:#111827; --mut:#6b7280; --ring:#e5e7eb;
-      --bar:#0b2e47; --card:#ffffff; --chip:#111827; --pill:#ffffff;
+      --bar:#0b2e47; --card:#ffffff; --chip:#111827; --pill:#ffffff; --chipbg:#fff;
     }
     @media (prefers-color-scheme: dark){
-      :root{ --bg:#0f172a; --ink:#e5e7eb; --mut:#94a3b8; --ring:#1f2937; --card:#0b1220; --pill:#0b1220; }
+      :root{
+        --bg:#0f172a; --ink:#e5e7eb; --mut:#94a3b8; --ring:#1f2937;
+        --card:#0b1220; --pill:#0b1220; --chip:#ffffff; --chipbg:#0b1220;
+      }
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
     a{color:inherit;text-decoration:none}
     a:hover{text-decoration:underline}
-
     /* Top bar */
     .bar{background:var(--bar);color:#fff;padding:12px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
     .bar__crumb{opacity:.9}
     .bar__title{font-weight:700}
-
     /* Layout */
     .wrap{max-width:1200px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:280px 1fr;gap:18px}
     @media (max-width:860px){ .wrap{grid-template-columns:1fr} }
-
     /* Left panel */
     .panel{background:#fff;border:1px solid var(--ring);border-radius:12px;padding:14px}
     .panel h3{margin:0 0 8px 0;font-size:.95rem;letter-spacing:.03em;color:#334155}
@@ -34,31 +34,32 @@
     .panel .lnk:hover{background:#f3f4f6}
     .muted{color:var(--mut)}
     .small{font-size:.85rem}
-
     /* Search/filter */
     .searchbox{display:flex;gap:10px;align-items:center;margin-bottom:8px}
     .searchbox input[type="search"]{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ring);border-radius:10px;font-size:16px;background:#fff}
     .count{font-size:.85rem;color:var(--mut)}
-
     /* Cards */
     .list{display:flex;flex-direction:column;gap:14px}
     .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:16px}
     .title{font-weight:800;margin:0 0 6px 0}
     .meta{font-size:.9rem;color:var(--mut);margin-bottom:8px}
     .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{display:inline-block;border:1px solid #d1d5db;border-radius:999px;padding:5px 10px;font-size:.8rem;background:var(--pill);color:var(--chip)}
+    .chip{
+      display:inline-block;border:1px solid #d1d5db;border-radius:999px;padding:6px 12px;
+      font-size:.85rem;background:var(--chipbg);color:var(--chip);font-weight:600;
+    }
+    .chip[aria-disabled="true"]{opacity:.6;cursor:not-allowed}
     .chip:hover{background:#eef2f7}
   </style>
 </head>
 <body>
-  <!-- Top bar -->
   <div class="bar">
     <a class="bar__crumb" href="./">Laws</a>
     <span class="bar__title">Index</span>
   </div>
 
   <div class="wrap">
-    <!-- LEFT: REPOS/INDEX panel (includes Search link) -->
+    <!-- LEFT: REPOS/INDEX panel -->
     <aside class="panel">
       <h3>REPOS / INDEX</h3>
       <a class="lnk" href="https://info1691.github.io/law-index/" target="_blank" rel="noopener">Public: <strong>law-index</strong></a>
@@ -68,16 +69,12 @@
       <a class="lnk" href="https://github.com/Info1691/lex-ingest-local" target="_blank" rel="noopener">Agent 1: <strong>lex-ingest-local</strong></a>
       <a class="lnk" href="https://github.com/Info1691/laws-ui" target="_blank" rel="noopener">This UI: <strong>laws-ui</strong></a>
 
-      <!-- 🔎 Search (beta) link placed RIGHT HERE (Rule 10) -->
-      <a href="./search.html"
-         style="display:inline-flex;align-items:center;gap:.5rem;margin:.25rem 0 0 .25rem;font-size:.875rem;opacity:.9">
-        <span aria-hidden="true">🔎</span>
-        <span>Search (beta)</span>
-      </a>
+      <!-- Optional search link; keep if you also add a search.html later
+      <a href="./search.html" class="lnk">🔎 Search (beta)</a>
+      -->
 
       <div class="small muted" style="margin-top:10px">
-        Source:
-        <span id="sourceLabel">./laws.json</span>
+        Source: <span id="sourceLabel">./laws.json</span>
       </div>
       <div id="loaded" class="small muted" style="margin-top:6px">Loaded 0 item(s).</div>
     </aside>
@@ -94,10 +91,9 @@
 
   <script>
     // ---------- CONFIG ----------
-    // Primary: local file in this repo
     const LAWS_URL_PRIMARY = './laws.json';
-    // Fallback: public artifact in law-index (adjust if your path differs)
     const LAWS_URL_FALLBACK = 'https://info1691.github.io/law-index/laws/laws.json';
+    const PUBLIC_BASE = 'https://info1691.github.io/law-index/';
 
     // ---------- DOM ----------
     const $q = document.getElementById('q');
@@ -110,48 +106,66 @@
     const norm = v => (v ?? '').toString().toLowerCase();
     const tokens = s => norm(s).split(/\s+/).filter(Boolean);
 
-    function resolveTxtHref(it){
-      // Accepts fields: it.url, it.txt, it.path
-      const raw = (it.url || it.txt || it.path || '').toString().trim();
-      if (!raw) return '#';
+    function firstNonEmpty(obj, keys){
+      for (const k of keys){ const v = obj?.[k]; if (v != null && String(v).trim() !== '') return String(v).trim(); }
+      return '';
+    }
 
-      // already absolute
+    function resolveTxtHref(it){
+      // tolerate many field names
+      let raw = firstNonEmpty(it, ['url_txt','url','txt','path','href','file']);
+      if (!raw) {
+        // Try to build from common fields
+        const maybe = firstNonEmpty(it, ['relative','rel','slug']);
+        if (maybe) raw = maybe;
+      }
+      if (!raw) return '';
+
+      // Already absolute?
       if (/^https?:\/\//i.test(raw)) return raw;
 
-      // If this repo stores the actual texts locally, keep it relative:
-      if (/^data\/|^texts\//i.test(raw)) return raw.replace(/^\.?\/*/, './');
+      // Looks like a local path (repo file)?
+      if (/^(\.\/|data\/|texts\/|laws\/)/i.test(raw)) {
+        return raw.replace(/^\.?\/*/, './');
+      }
 
-      // Else assume it's in the public law-index under /laws/
-      return 'https://info1691.github.io/law-index/' + raw.replace(/^\.?\/*/, '');
+      // Looks like a jurisdiction/file path? Put under public base.
+      if (/^(jersey|uk)\//i.test(raw)) {
+        return PUBLIC_BASE + 'laws/' + raw.replace(/^\.?\/*/, '');
+      }
+
+      // Default: treat as relative to public base
+      return PUBLIC_BASE + raw.replace(/^\.?\/*/, '');
     }
 
     function itemCard(it){
-      const art = document.createElement('article');
-      art.className = 'card';
+      const art = document.createElement('article'); art.className = 'card';
 
-      const h = document.createElement('h2');
-      h.className = 'title';
-      h.textContent = it.title || it.name || it.reference || 'Untitled';
+      const h = document.createElement('h2'); h.className='title';
+      h.textContent = firstNonEmpty(it, ['title','name','reference','id']) || 'Untitled';
 
-      const m = document.createElement('div');
-      m.className = 'meta';
+      const m = document.createElement('div'); m.className='meta';
       const bits = [];
-      if (it.jurisdiction) bits.push(String(it.jurisdiction).toUpperCase());
-      if (it.body) bits.push(it.body);
-      if (it.year) bits.push(it.year);
-      if (it.reference) bits.push(it.reference);
+      const j = firstNonEmpty(it, ['jurisdiction','jur']);
+      if (j) bits.push(j.toUpperCase());
+      const b = firstNonEmpty(it, ['body']);
+      if (b) bits.push(b);
+      const y = firstNonEmpty(it, ['year']);
+      if (y) bits.push(y);
+      const r = firstNonEmpty(it, ['reference','ref']);
+      if (r) bits.push(r);
       m.textContent = bits.join(' · ');
 
-      const chips = document.createElement('div');
-      chips.className = 'chips';
+      const chips = document.createElement('div'); chips.className='chips';
+      const href = resolveTxtHref(it);
       const a = document.createElement('a');
       a.className = 'chip';
-      a.textContent = 'TXT';
-      a.href = resolveTxtHref(it);
-      a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = href ? 'TXT' : 'NO LINK';
+      if (href) { a.href = href; a.target='_blank'; a.rel='noopener'; }
+      else { a.setAttribute('aria-disabled','true'); a.href='#'; }
       chips.appendChild(a);
 
-      art.append(h, m, chips);
+      art.append(h,m,chips);
       return art;
     }
 
@@ -166,7 +180,7 @@
       const q = tokens($q.value);
       if (!q.length){ render(window.__LAWS || []); return; }
       const out = (window.__LAWS || []).filter(it => {
-        const hay = [it.title, it.jurisdiction, it.body, it.year, it.reference]
+        const hay = [it.title, it.name, it.reference, it.jurisdiction, it.body, it.year, it.slug]
           .map(norm).join(' ');
         return q.every(t => hay.includes(t));
       });
@@ -190,8 +204,7 @@
           window.__LAWS = await getJSON(LAWS_URL_FALLBACK);
         }catch(e2){
           $list.innerHTML = '<div class="card">Failed to load laws.json from both sources.</div>';
-          console.error('Primary error:', e1);
-          console.error('Fallback error:', e2);
+          console.error('Primary error:', e1); console.error('Fallback error:', e2);
           return;
         }
       }
